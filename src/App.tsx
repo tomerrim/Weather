@@ -7,12 +7,12 @@ import "leaflet/dist/leaflet.css";
 import "./App.css";
 import LocationMarker from "./components/LocationMarker/LocationMarker";
 import MapUpdater from "./components/MapUpdater/MapUpdater";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 const App: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any | null>(null);
   const [center, setCenter] = useState<LatLngExpression>([40.7128, -74.0060]);
   const [zoom, setZoom] = useState<number>(2);
-  const [searchCity, setSearchCity] = useState<string>("");
   const [markerPosition, setMarkerPosition] = useState<LatLngTuple | null>(null);
 
   const API_KEY: string = "fb16e10d4670738c93c8ded9a00018a5";
@@ -52,13 +52,7 @@ const App: React.FC = () => {
   }
 };
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-  const target = e.target as typeof e.target & {
-    city: { value: string };
-  };
-  const cityName = target.city.value;
-
+  async function handleSubmit(cityName: string) {
   // Fetch the city's coordinates
   try {
     const response = await axios.get(
@@ -68,10 +62,13 @@ const App: React.FC = () => {
       const lat = parseFloat(response.data[0].lat);
       const lon = parseFloat(response.data[0].lon);
       const newPosition: LatLngTuple = [lat, lon];
+
       // Update the marker position
       setMarkerPosition(newPosition);
+
       // Fetch weather data for the new position
       fetchWeatherData(newPosition);
+
       // Update the map center
       setCenter(newPosition);
     } else {
@@ -80,20 +77,12 @@ const App: React.FC = () => {
   } catch (error) {
     console.error(`Error fetching city coordinates: ${error}`);
   }
-}
+};
 
 return (
     <div className="App">
       <h1>Weather Forecast</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="city"
-          placeholder="Search city"
-          onChange={(e) => setSearchCity(e.target.value)}
-        />
-        <button type="submit">Search</button>
-      </form>
+      <SearchBar onSubmit={(value) => handleSubmit(value)}/>
       <WeatherDisplay weatherData={weatherData} />
       <MapContainer
        center={center} zoom={zoom} scrollWheelZoom={true}>
