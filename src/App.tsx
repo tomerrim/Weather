@@ -9,13 +9,14 @@ import LocationMarker from "./components/LocationMarker/LocationMarker";
 import MapUpdater from "./components/MapUpdater/MapUpdater";
 import SearchBar from "./components/SearchBar/SearchBar";
 
+
 const App: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any | null>(null);
   const [center, setCenter] = useState<LatLngExpression>([40.7128, -74.0060]);
   const [zoom, setZoom] = useState<number>(2);
   const [markerPosition, setMarkerPosition] = useState<LatLngTuple | null>(null);
 
-  const API_KEY: string = "fb16e10d4670738c93c8ded9a00018a5";
+  const API_KEY = process.env.REACT_APP_API_KEY;
 
   const customIcon = new Icon({
   iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
