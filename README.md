@@ -44,3 +44,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+![weaterApp](https://github.com/tomerrim/Weather/assets/126825978/3f87368f-fab3-4f51-8bc4-45535c15daa0)
+![weaterApp2](https://github.com/tomerrim/Weather/assets/126825978/7d4f0341-4d93-4c22-b869-66f191923173)
